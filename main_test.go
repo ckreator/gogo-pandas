@@ -30,9 +30,12 @@ func readf(fname string) string {
 }
 
 func BenchmarkParse(b *testing.B) {
+	//	var tabs []*Table
 	var t *Table
 	for n := 0; n < b.N; n++ {
 		t, _ = ParseCSV("./test_data/simple.csv")
+		//tabs = append(tabs, t)
+		//fmt.Println("LEN:", len(tabs), t)
 	}
 	tab = t
 }
