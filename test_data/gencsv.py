@@ -18,7 +18,7 @@ def main():
     type_counts = pd.Series(args.types_list).value_counts()
     out = pd.DataFrame(pd.np.zeros((args.num_lines, len(args.types_list))))
     cols = pd.np.array(args.types_list)
-    for type_str in args.types_list:
+    for type_str in type_counts.index.tolist():
       col_select = cols == type_str
       frm = funcs[type_str](type_counts.loc[type_str]).astype(object)
       out.loc[:, col_select] = frm.values
@@ -99,7 +99,6 @@ def test(file_name):
   def test_fn():
     return pd.read_csv(file_name, engine='c')
   n_rep = 1000
-  exec_str = "test_fn('{}')".format(file_name)
   time_sec = timeit(test_fn, number=n_rep)
   print('Pandas will parse the file {} times in: {}s'.format(n_rep, time_sec))
 
